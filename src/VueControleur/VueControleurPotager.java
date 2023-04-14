@@ -102,13 +102,14 @@ public class VueControleurPotager extends JFrame implements Observer {
         
 
         JPanel infos = new JPanel();
+        infos.setLayout(new BoxLayout(infos, BoxLayout.Y_AXIS));
 
         JTextField jtf = new JTextField("infos diverses"); // TODO inclure dans mettreAJourAffichage ...
         jtf.setEditable(false);
         infos.add(jtf);
 
         add(infos, BorderLayout.EAST);
-
+        
         JButton carotteButton = new JButton(icoCarotte);
         infos.add(carotteButton);
         carotteButton.addActionListener(new ActionListener() {
