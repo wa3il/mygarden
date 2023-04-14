@@ -3,6 +3,9 @@ package VueControleur;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +20,7 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import modele.SimulateurPotager;
 import modele.environnement.*;
 import modele.environnement.varietes.Legume;
+import modele.environnement.varietes.Varietes;
 
 
 /** Cette classe a deux fonctions :
@@ -32,6 +36,11 @@ public class VueControleurPotager extends JFrame implements Observer {
 
     // icones affichées dans la grille
     private ImageIcon icoSalade;
+    private ImageIcon icoCarotte;
+    private ImageIcon icoPoireau;
+    private ImageIcon icoRadis;
+    private ImageIcon icoTomate;
+
     private ImageIcon icoTerre;
     private ImageIcon icoVide;
     private ImageIcon icoMur;
@@ -68,8 +77,13 @@ public class VueControleurPotager extends JFrame implements Observer {
     private void chargerLesIcones() {
     	// image libre de droits utilisée pour les légumes : https://www.vecteezy.com/vector-art/2559196-bundle-of-fruits-and-vegetables-icons	
     
+        //On charge les légumes (pos 390)
+        icoSalade = chargerIcone("Images/data.png", 0, 0, 140, 140);//chargerIcone("Images/Pacman.png");
+        icoCarotte = chargerIcone("Images/data.png", 390, 390, 140, 140);
+        icoPoireau = chargerIcone("Images/data.png", 7 * 390, 0, 140, 140);
+        icoRadis = chargerIcone("Images/data.png", 2*390, 2*390, 140, 140);
+        icoTomate = chargerIcone("Images/data.png", 4*390, 390, 140, 140);
 
-        icoSalade = chargerIcone("Images/data.png", 0, 0, 120, 120);//chargerIcone("Images/Pacman.png");
         icoVide = chargerIcone("Images/Vide.png");
         icoMur = chargerIcone("Images/Mur.png");
         icoTerre = chargerIcone("Images/Terre.png");
@@ -95,6 +109,45 @@ public class VueControleurPotager extends JFrame implements Observer {
 
         add(infos, BorderLayout.EAST);
 
+        JButton carotteButton = new JButton(icoCarotte);
+        infos.add(carotteButton);
+        carotteButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                simulateurPotager.PlanterLegume(Varietes.carrotte);
+            }
+        });
+        
+        JButton SaladeButton = new JButton(icoSalade);
+        infos.add(SaladeButton);
+        SaladeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                simulateurPotager.PlanterLegume(Varietes.salade);
+            }
+        });
+
+        JButton PoireauButton = new JButton(icoPoireau);
+        infos.add(PoireauButton);
+        PoireauButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                simulateurPotager.PlanterLegume(Varietes.poireau);
+            }
+        });
+
+        JButton radisButton = new JButton(icoRadis);
+        infos.add(radisButton);
+        radisButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                simulateurPotager.PlanterLegume(Varietes.radis);
+            }
+        });
+
+        JButton tomateButton = new JButton(icoTomate);
+        infos.add(tomateButton);
+        tomateButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                simulateurPotager.PlanterLegume(Varietes.tomate);
+            }
+        });
 
 
         JComponent grilleJLabels = new JPanel(new GridLayout(sizeY, sizeX)); // grilleJLabels va contenir les cases graphiques et les positionner sous la forme d'une grille
@@ -143,6 +196,10 @@ public class VueControleurPotager extends JFrame implements Observer {
 
                         switch (legume.getVariete()) {
                             case salade: tabJLabel[x][y].setIcon(icoSalade); break;
+                            case carrotte: tabJLabel[x][y].setIcon(icoCarotte); break;
+                            case tomate: tabJLabel[x][y].setIcon(icoTomate); break;
+                            case poireau: tabJLabel[x][y].setIcon(icoPoireau); break;
+                            case radis: tabJLabel[x][y].setIcon(icoRadis); break;
                         }
 
                     } else {
